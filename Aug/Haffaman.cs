@@ -1,55 +1,82 @@
+//Rextester.Program.Main is the entry point for your code. Don't change it.
+//Compiler version 4.0.30319.17929 for Microsoft (R) .NET Framework 4.5
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-public class MainClass
+namespace Rextester
 {
-    public static void Main()
+    public class Program
     {
-          string target = Console.ReadLine();
-            //Console.WriteLine(target);
-            Dictionary<char, string> words = new Dictionary<char, string>();
-            String curWay = "0";
-           for (char c = 'a'; c <= 'z'; c++)
-            {
-               
-               char chares = c;
-               words.Add(chares,curWay);
-                   curWay="1"+curWay;               
-            } 
-            //мапа с уникальными занчениями
-            SortedDictionary<char, string> targetDict = new SortedDictionary<char, string>();
-            
+        public static void Main(string[] args)
+        {
+             string target = Console.ReadLine();
+            // мапа с чарами и поторениями
+            Dictionary<char, int> chars = new Dictionary<char, int>();
             char[] targetToCharArray = target.ToCharArray();
-            //формируем уникальную мапу
             for(int i = 0;i<targetToCharArray.Count();i++){
-                if(!targetDict.ContainsKey(targetToCharArray[i])){
-                    targetDict.Add(targetToCharArray[i],words[targetToCharArray[i]]);
+                if(!chars.ContainsKey(targetToCharArray[i])){
+                    chars.Add(targetToCharArray[i],0);
+                }else{
+                    chars[targetToCharArray[i]]++;
                 }                
             }
-             if(targetDict.Count>1){
-            var last = targetDict.Values.Last();
-            var lastKey = targetDict.Keys.Last();
-            targetDict.Remove(targetDict.Keys.Last());
-            targetDict.Add(lastKey, last.Remove(last.Length - 1));
+            
+            Queue<string> myQ = new Queue<string>();
+            List<Node> nodeList = new List<Node>();
+            
+            
+            List<KeyValuePair<char, int>> myList = chars.ToList();
+
+            myList.Sort((pair1,pair2) => pair1.Value.CompareTo(pair2.Value));
+          
+            Dictionary<char, string> targetDict = new Dictionary<char, string>();
+            String curWay = "0";
+            foreach(KeyValuePair<char, int> entry in myList){
+                myQ.Enqueue(entry.Key.ToString());
+                targetDict.Add(entry.Key, curWay);
+                curWay="1"+curWay;
+                nodeList.Add(new Node(entry.Value,entry.Key));
             }
             
-            /*foreach(KeyValuePair<char, string> entry in targetDict){
-                Console.WriteLine("key : {0} + value : {1}", entry.Key,entry.Value);
-            }*/
-            
-            Console.Write(targetDict.Count()+" ");
-            String result = "";
-            for(int i = 0;i<targetToCharArray.Count();i++){
-                //Console.WriteLine("{0} : {1}", targetToCharArray[i],targetDict[targetToCharArray[i]]);
-                 result +=targetDict[targetToCharArray[i]];
+            foreach(Node entry in nodeList){
+                Console.WriteLine(entry);
             }
-            Console.WriteLine(result.Length);
-            foreach(KeyValuePair<char, string> entry in targetDict){
-                Console.WriteLine("{0}: {1}", entry.Key,entry.Value);
-            }
+            for(int i=1;i<nodeList.Count;i++){
+                 //Node newNode = new Node(nodeList[i-1]);   
+                }
+               
            
-            Console.WriteLine(result);
+        }
+    }
+    public class Node{
+        public Node leftNode=null;
+        public Node rightNode=null;
+        public int valueNode;
+        public char charNode;
+        
+        public Node(Node leftNode,Node rightNode,int valueNode,char charNode){
+            this.leftNode=leftNode;
+            this.rightNode=rightNode;
+            this.valueNode=valueNode;
+            this.charNode = charNode;
+        }
+        
+        public Node(int valueNode,char charNode){            
+            this.valueNode=valueNode;
+            this.charNode = charNode;
+        }
+        
+         public Node(char charNode){            
+            this.charNode=charNode;
+            
+        }
+        
+        public override string ToString(){
+            return String.Format("Left node: {0}, Right node: {1}, Value: {2}, Char: {3};",this.leftNode,this.rightNode,this.valueNode,this.charNode);
+        }
+        
     }
 }
