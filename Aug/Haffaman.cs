@@ -13,7 +13,7 @@ namespace Rextester
         public static void Main(string[] args)
         {
              string target = Console.ReadLine();
-            // мапа с чарами и поторениями
+            // мапа с чарами и повторениями
             Dictionary<char, int> chars = new Dictionary<char, int>();
             char[] targetToCharArray = target.ToCharArray();
             for(int i = 0;i<targetToCharArray.Count();i++){
@@ -23,8 +23,9 @@ namespace Rextester
                     chars[targetToCharArray[i]]++;
                 }                
             }
-            
+           
             Queue<string> myQ = new Queue<string>();
+            //ноды в подярдке возрастания частоты
             List<Node> nodeList = new List<Node>();
             
             
@@ -47,7 +48,13 @@ namespace Rextester
             for(int i=1;i<nodeList.Count;i++){
                  //Node newNode = new Node(nodeList[i-1]);   
                 }
-               
+            /* 
+            
+            алгоритм: вытаскивать первые два элемента из nodelisi, удалять их, образовать из них новую ноду с value = 
+            сумме предыдущих, добавить новую ноду в лист.
+            лист должен сортироваться по value node.
+            */
+            
            
         }
     }
