@@ -39,12 +39,30 @@ namespace Rextester
                 myQ.Enqueue(entry.Key.ToString());
                 targetDict.Add(entry.Key, curWay);
                 curWay="1"+curWay;
-                nodeList.Add(new Node(entry.Value,entry.Key));
+                nodeList.Add(new Node(entry.Value+1,entry.Key));
             }
             
+            nodeList.OrderBy(o=>o.valueNode).ToList();
+            /*foreach(Node entry in nodeList){
+                Console.WriteLine(entry);
+            }*/
+            
+            while(nodeList.Count>1){
+                Node newNode = new Node(nodeList[0],nodeList[1],(nodeList[0].valueNode+nodeList[1].valueNode),'-');
+                nodeList.RemoveAt(1);
+                nodeList.RemoveAt(0);                
+                nodeList.Add(newNode);
+                nodeList.OrderBy(o=>o.valueNode).ToList();
+                //Console.WriteLine(newNode);
+            }
+            Console.WriteLine(nodeList.Count);
+             Node finishNode = nodeList[0];
             foreach(Node entry in nodeList){
                 Console.WriteLine(entry);
             }
+            
+            Console.WriteLine(finishNode.Search('b'),"");
+            
             for(int i=1;i<nodeList.Count;i++){
                  //Node newNode = new Node(nodeList[i-1]);   
                 }
@@ -71,6 +89,13 @@ namespace Rextester
             this.charNode = charNode;
         }
         
+        public Node(Node leftNode,Node rightNode,int valueNode){
+            this.leftNode=leftNode;
+            this.rightNode=rightNode;
+            this.valueNode=valueNode;           
+        }
+        
+        
         public Node(int valueNode,char charNode){            
             this.valueNode=valueNode;
             this.charNode = charNode;
@@ -81,8 +106,33 @@ namespace Rextester
             
         }
         
+        public String Search(char charFind,String inner="" ){
+            String result = inner;
+            if(charFind==this.charNode){
+                return result;
+            }
+            
+            
+            if(leftNode!=null){
+                result+="0";
+                String leftResult =  this.leftNode.Search(charFind,result);
+                if(leftResult!=""){return leftResult;}
+            }
+            
+            if(rightNode!=null){
+                result+="1";
+                String rightResult =  this.rightNode.Search(charFind,result);
+                if(rightResult!=""){return rightResult;}
+            }
+       
+            return result;
+                
+            
+        }
+        
         public override string ToString(){
-            return String.Format("Left node: {0}, Right node: {1}, Value: {2}, Char: {3};",this.leftNode,this.rightNode,this.valueNode,this.charNode);
+            String fs = String.Format("\r\nMy value : {0}, My char : {3}, Left child value: {1}, Right child value: {2}\r\n",this.valueNode,this.leftNode,this.rightNode,this.charNode);
+            return fs;
         }
         
     }
