@@ -1,14 +1,17 @@
-//Rextester.Program.Main is the entry point for your code. Don't change it.
-//Compiler version 4.0.30319.17929 for Microsoft (R) .NET Framework 4.5
+/*
+По данной непустой строке s длины не более 10^4, состоящей из строчных букв латинского алфавита, 
+постройте оптимальный беспрефиксный код. В первой строке выведите количество различных букв k, 
+встречающихся в строке, и размер получившейся закодированной строки. 
+В следующих k строках запишите коды букв в формате "letter: code". 
+В последней строке выведите закодированную строку.
+*/
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Rextester
-{
-    public class Program
+public class MainClass
     {
         public static void Main(string[] args)
         {
@@ -55,23 +58,47 @@ namespace Rextester
                 
                 nodeList = nodeList.OrderBy(o=>o.valueNode).ToList();                
             }
-            Console.WriteLine(nodeList.Count);
+            //Console.WriteLine(nodeList.Count);
              Node finishNode = nodeList[0];
             /*foreach(Node entry in nodeList){
                 Console.WriteLine(entry);
             }*/
+           Console.Write(chars.Count+" ");
             
-            Console.WriteLine(finishNode.Search('o'),"");
+            Dictionary<char, String> charPath = new Dictionary<char, String>();
+            foreach(KeyValuePair<char, int> entry in chars){
+                if(chars.Count==1){
+                    charPath.Add(entry.Key,finishNode.Search((entry.Key),"1"));
+                }else
+                charPath.Add(entry.Key,finishNode.Search((entry.Key),""));
+            }
             
+            
+            
+            String result = "";
+            foreach(char entry in targetToCharArray){
+                result +=charPath[entry];
+            }
+            Console.WriteLine(result.Length);
+             foreach(KeyValuePair<char, String> entry in charPath){
+                Console.WriteLine("{0}: {1}", entry.Key,entry.Value);
+            }
+            Console.WriteLine(result);
+           /* String result = "";
+            foreach(KeyValuePair<char, int> entry in chars){
+                result +=finishNode.Search((entry.Key),"");
+            }
+            Console.WriteLine(result.Length);
+            foreach(KeyValuePair<char, int> entry in chars){
+                Console.WriteLine("{0}: {1}", entry.Key,entry.Value);
+            }
+            Console.WriteLine(result);*/
+            
+            //Console.WriteLine(finishNode.Search(('e'),""));
             for(int i=1;i<nodeList.Count;i++){
                  //Node newNode = new Node(nodeList[i-1]);   
                 }
-            /* 
-            
-            алгоритм: вытаскивать первые два элемента из nodelisi, удалять их, образовать из них новую ноду с value = 
-            сумме предыдущих, добавить новую ноду в лист.
-            лист должен сортироваться по value node.
-            */
+         
             
            
         }
@@ -164,4 +191,3 @@ namespace Rextester
         }
         
     }
-}
