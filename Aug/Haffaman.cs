@@ -44,10 +44,10 @@ namespace Rextester
             
             
             while(nodeList.Count>1){
-                foreach(Node entry in nodeList){
+                /*foreach(Node entry in nodeList){
                     Console.WriteLine(entry);
                 }
-                Console.WriteLine("----------------------------------");
+                Console.WriteLine("----------------------------------");*/
                 Node newNode = new Node(nodeList[0],nodeList[1],(nodeList[0].valueNode+nodeList[1].valueNode),'-');
                 nodeList.RemoveAt(1);
                 nodeList.RemoveAt(0);                
@@ -61,7 +61,7 @@ namespace Rextester
                 Console.WriteLine(entry);
             }*/
             
-            Console.WriteLine(finishNode.Search('e'),"");
+            Console.WriteLine(finishNode.Search('o'),"");
             
             for(int i=1;i<nodeList.Count;i++){
                  //Node newNode = new Node(nodeList[i-1]);   
@@ -106,29 +106,55 @@ namespace Rextester
             
         }
         
+        public bool tryGetValue(char findThat){
+            bool result = this.charNode==findThat;
+            if(!result)
+                result = this.leftNode.charNode==findThat;
+            if(!result)
+                result = this.rightNode.charNode==findThat;
+            return result;
+        }
+        
         public String Search(char charFind,String inner="" ){
+            
             String result = inner;
-            if(charFind==this.charNode){
+            
+            if(charFind==charNode){
                 return result;
             }
             
-            
-            if(leftNode!=null){ 
-                Console.WriteLine("Левая: "+leftNode);
-                String newRes = result+="0";
-                String leftResult =  this.leftNode.Search(charFind,newRes);
-                if(leftResult!=""){return leftResult;}
+            if(this.rightNode!=null){
+                String newRes = result+"1";
+                String res = rightNode.Search(charFind,newRes);
+                if(res!=""){ return res;}
             }
-           
-            if(rightNode!=null){
+            
+            if(this.leftNode!=null){
+                String newRes = result+"0";
+                String res = leftNode.Search(charFind,newRes);
+                if(res!=""){ return res;}
+            }
+            
+            return "";
+            /*
+             if(this.rightNode!=null){
                 Console.WriteLine("Правая: "+rightNode);
-               String newRes = result+="1";
+                String newRes = result+="1";
                 String rightResult =  this.rightNode.Search(charFind,newRes);
                 if(rightResult!=""){return rightResult;}
             }
+            
+            if(this.leftNode!=null){ 
+                Console.WriteLine("Левая: "+leftNode);
+                String newResL = result+="0";
+                String leftResult =  this.leftNode.Search(charFind,newResL);
+                if(leftResult!=""){return leftResult;}
+            }
+           
+           
            
             return "";
-                
+                */
             
         }
         
