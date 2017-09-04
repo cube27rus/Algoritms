@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-public class MainClass
+public class Program
     {
         public static void Main(string[] args)
         {
@@ -42,10 +42,7 @@ public class MainClass
              
                 nodeList.Add(new Node(entry.Value+1,entry.Key));
             }
-            
-            nodeList.OrderBy(o=>o.valueNode).ToList();
-            
-            
+
             while(nodeList.Count>1){
                 /*foreach(Node entry in nodeList){
                     Console.WriteLine(entry);
@@ -58,11 +55,9 @@ public class MainClass
                 
                 nodeList = nodeList.OrderBy(o=>o.valueNode).ToList();                
             }
-            //Console.WriteLine(nodeList.Count);
+
              Node finishNode = nodeList[0];
-            /*foreach(Node entry in nodeList){
-                Console.WriteLine(entry);
-            }*/
+
            Console.Write(chars.Count+" ");
             
             Dictionary<char, String> charPath = new Dictionary<char, String>();
@@ -84,22 +79,7 @@ public class MainClass
                 Console.WriteLine("{0}: {1}", entry.Key,entry.Value);
             }
             Console.WriteLine(result);
-           /* String result = "";
-            foreach(KeyValuePair<char, int> entry in chars){
-                result +=finishNode.Search((entry.Key),"");
-            }
-            Console.WriteLine(result.Length);
-            foreach(KeyValuePair<char, int> entry in chars){
-                Console.WriteLine("{0}: {1}", entry.Key,entry.Value);
-            }
-            Console.WriteLine(result);*/
-            
-            //Console.WriteLine(finishNode.Search(('e'),""));
-            for(int i=1;i<nodeList.Count;i++){
-                 //Node newNode = new Node(nodeList[i-1]);   
-                }
-         
-            
+
            
         }
     }
@@ -163,25 +143,7 @@ public class MainClass
             }
             
             return "";
-            /*
-             if(this.rightNode!=null){
-                Console.WriteLine("Правая: "+rightNode);
-                String newRes = result+="1";
-                String rightResult =  this.rightNode.Search(charFind,newRes);
-                if(rightResult!=""){return rightResult;}
-            }
-            
-            if(this.leftNode!=null){ 
-                Console.WriteLine("Левая: "+leftNode);
-                String newResL = result+="0";
-                String leftResult =  this.leftNode.Search(charFind,newResL);
-                if(leftResult!=""){return leftResult;}
-            }
-           
-           
-           
-            return "";
-                */
+
             
         }
         
